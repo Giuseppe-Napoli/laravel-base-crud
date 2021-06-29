@@ -4,7 +4,7 @@ use App\Fumetto;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
-class FumettoTableSeer extends Seeder
+class FumettoTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,7 @@ class FumettoTableSeer extends Seeder
     public function run()
     {
         $array_fumetto = config('fumetto');
+        
         foreach ($array_fumetto as $fumetto_item) {
             
             $new_fumetto = new Fumetto();
@@ -26,6 +27,8 @@ class FumettoTableSeer extends Seeder
             $new_fumetto->sale_date = $fumetto_item['sale_date'];
             $new_fumetto->type = $fumetto_item['type'];
             $new_fumetto->save();
-        }
+
+        } 
+        
     }
 }

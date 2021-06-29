@@ -20,7 +20,7 @@ class CreateFumettosTable extends Migration
             $table->text('description')->nullable();
             $table->string('thumb');
             $table->float('price',6,2);
-            $table->string('series',50);
+            $table->string('series',150);
             $table->string('sale_date',20);
             $table->string('type',30);
             $table->timestamps();

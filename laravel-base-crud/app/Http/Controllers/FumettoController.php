@@ -15,7 +15,9 @@ class FumettoController extends Controller
      */
     public function index()
     {
+        
         $fumettos = Fumetto::all();
+        
         return view('fumettos.index', compact('fumettos'));
 
     }
@@ -47,9 +49,12 @@ class FumettoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Fumetto $fumetto)
     {
-        //
+        if($fumetto){
+            return view('fumettos.show',compact('fumetto'));
+        }
+        abort(404, 'Fumetto non presente nel database!');
     }
 
     /**
