@@ -29,7 +29,7 @@ class FumettoController extends Controller
      */
     public function create()
     {
-        //
+        return view('fumettos.create');
     }
 
     /**
@@ -40,7 +40,14 @@ class FumettoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $new_fumetto = new Fumetto();
+        $data['slug'] = Str::slug($data['title'], '-');
+        $new_fumetto->fill($data); 
+
+        $new_fumetto->save();
+
+        return redirect()->route('fumettos.show',$new_fumetto);
     }
 
     /**
@@ -49,8 +56,9 @@ class FumettoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Fumetto $fumetto)
-    {
+    public function show($id)
+    {   
+        $fumetto = Fumetto::find($id);
         if($fumetto){
             return view('fumettos.show',compact('fumetto'));
         }
@@ -65,7 +73,11 @@ class FumettoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $fumetto = Fumetto::find($id);
+        if($fumetto){
+            return view('fumettos.edit',compact('fumetto'));
+        }
+        abort(404, 'Prodotto non presente nel database!');
     }
 
     /**
@@ -75,9 +87,18 @@ class FumettoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Fumetto $fumetto)
     {
-        //
+       // leggo il dato in arrivo dal form
+       $data = $request->all();
+
+
+       // selezione la riga della tabella da aggiornare
+       //$pasta = Pasta::find($id); -> $pasta è l'entità originale non ancora sovrascritta
+       $data['slug'] = Str::slug($data['title'], '-');
+       $fumetto->update($data); // fanno sempre riferimento i dati fillabili
+
+       return redirect()->route('fumettos.show',$fumetto);
     }
 
     /**
@@ -86,8 +107,9 @@ class FumettoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Fumetto $fumetto)
     {
-        //
+        $fumetto->delete();
+        return redirect()->route('fumettos.index')->with('deleted',$fumetto->title);
     }
 }

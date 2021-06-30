@@ -21,8 +21,16 @@
                     <td>
                         <a href="{{ route('fumettos.show', $fumetto) }} " class="btn btn-success">SHOW</a>
                     </td>
-                    <td>EDIT</td>
-                    <td>DELETE</td>
+                    <td>
+                        <a href="{{ route('fumettos.edit', $fumetto) }}" class="btn btn-primary">EDIT</a>
+                    </td>
+                    <td>
+                        <form action="{{ route('fumettos.destroy', $fumetto) }}" method="POST">
+                              @csrf
+                              @method('DELETE')
+                              <button type="submit" class="btn btn-danger">DELETE</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach 
 

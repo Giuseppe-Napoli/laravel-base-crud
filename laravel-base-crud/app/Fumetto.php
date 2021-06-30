@@ -8,4 +8,15 @@ class Fumetto extends Model
 {
     //
     /* protected $table = 'fumettos'; */
+    protected $fillable = [
+        'title',
+        'description',
+        'series',
+        'type',
+        'price',
+        'slug',
+        'thumb',
+        'sale_date'
+       
+    ];
 }
